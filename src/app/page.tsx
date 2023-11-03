@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { SectorComponent } from "../components/sectors/SectorsComponent";
 import Loading from "@/components/loading/Loading";
-import { dbConnection } from "@/utils/dbConnection";
 import axios from "axios";
 
 export default function Home() {
@@ -19,6 +18,7 @@ export default function Home() {
       data: {
         name,
         selectedValues,
+        agreeOfTerms: isAgreeToTerms,
       },
     });
     setLoading(false);

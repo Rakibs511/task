@@ -4,11 +4,12 @@ import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
   await dbConnection();
-  const { name, selectedValues }: any = await req.json();
+  const { name, selectedValues, agreeOfTerms }: any = await req.json();
   const data = await prisma.user.create({
     data: {
       name: name,
       selectedItem: selectedValues,
+      agreeToTerms: agreeOfTerms,
     },
   });
   return NextResponse.json({ data }, { status: 201 });
