@@ -1,16 +1,32 @@
 "use client";
-import React, { Dispatch, SetStateAction, useEffect } from "react";
-import { dataArray } from "./data";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
+import axios from "axios";
 
 interface PropsType {
   setSelectedValues: Dispatch<SetStateAction<string[]>>;
   selectedValues: string[];
 }
 
+interface DataArray {
+  id: number;
+  value: string;
+  text: string;
+  disable: boolean;
+  position: number;
+}
+
 export const SectorComponent = ({
   setSelectedValues,
   selectedValues,
 }: PropsType) => {
+  const [dataArray, setDataArray] = useState<DataArray[]>([]);
+
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const options = event.target.options;
     const selectedItems: string[] = [];
@@ -20,14 +36,18 @@ export const SectorComponent = ({
       }
     }
     setSelectedValues(selectedItems);
-    localStorage.setItem("selectedValues", JSON.stringify(selectedItems));
   };
 
-  useEffect(() => {
-    const storedValues = localStorage.getItem("selectedValues");
-    if (storedValues) {
-      setSelectedValues(JSON.parse(storedValues));
-    }
+  const getOption = async () => {
+    const data = await axios({
+      method: "GET",
+      url: "/api/options",
+    });
+    setDataArray(data.data.data[0].DataArray);
+  };
+
+  useLayoutEffect(() => {
+    getOption();
   }, []);
 
   const optionLabelStyle = "flex bg-gray-800 h-10 md:text-2xl items-center";

@@ -2,18 +2,27 @@
 import { useState } from "react";
 import { SectorComponent } from "../components/sectors/SectorsComponent";
 import Loading from "@/components/loading/Loading";
+import { dbConnection } from "@/utils/dbConnection";
+import axios from "axios";
 
 export default function Home() {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const [name, setName] = useState<string | null>(null);
+  const [name, setName] = useState<string>("");
   const [isAgreeToTerms, setAgreeToTerms] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const handleSave = async () => {
     setLoading(true);
-    await fetch("https://jsonplaceholder.typicode.com/todos");
-    console.log({ name, selectedValues, isAgreeToTerms });
+    const data = await axios({
+      method: "POST",
+      url: "/api/user",
+      data: {
+        name,
+        selectedValues,
+      },
+    });
     setLoading(false);
+    console.log(data);
   };
 
   return (
