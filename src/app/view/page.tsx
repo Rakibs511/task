@@ -8,7 +8,7 @@ type UsersType = {
   agreeToTerms: string;
   createdAt: any;
 };
-const page = () => {
+const View = () => {
   const [users, setUsers] = useState<UsersType[]>();
 
   const getAllUserData = async () => {
@@ -38,4 +38,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default View;
