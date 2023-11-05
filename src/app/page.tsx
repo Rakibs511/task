@@ -1,14 +1,45 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SectorComponent } from "../components/sectors/SectorsComponent";
 import Loading from "@/components/loading/Loading";
 import axios from "axios";
+import LoginPopUp from "@/components/loginPopUp/LoginPopUp";
 
+type UsersType = {
+  id: number;
+  name: string;
+  agreeToTerms: string;
+  createdAt: any;
+  selectedItem: string[];
+};
 export default function Home() {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [id, setId] = useState<number>();
   const [name, setName] = useState<string>("");
   const [isAgreeToTerms, setAgreeToTerms] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
+
+  const [userExistingData, setUserExistingData] = useState<UsersType>();
+
+  useEffect(() => {
+    setId(userExistingData?.id);
+    setSelectedValues(userExistingData?.selectedItem!);
+    setAgreeToTerms(Boolean(userExistingData?.agreeToTerms));
+  }, [userExistingData]);
+
+  const getUserData = async () => {
+    if (id) {
+      const data = await axios({
+        method: "GET",
+        url: `/api/user/${id}`,
+      });
+      setUserExistingData(data.data.data);
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, [id]);
 
   const handleSave = async () => {
     setLoading(true);
@@ -16,18 +47,19 @@ export default function Home() {
       method: "POST",
       url: "/api/user",
       data: {
+        id,
         name,
         selectedValues,
         agreeOfTerms: isAgreeToTerms,
       },
     });
     setLoading(false);
-    console.log(data);
   };
 
   return (
     <main className="bg-gray-600 flex gap-5 justify-center items-center text-white">
       {isLoading ? <Loading /> : null}
+      {!id ? <LoginPopUp setId={setId} /> : null}
       <div className="flex gap-5 flex-col">
         <h1 className="text-xl md:text-3xl mb-6">
           Please enter your name and pick the Sectors <br /> you are currently
@@ -38,10 +70,12 @@ export default function Home() {
           placeholder="Enter your name"
           className="p-4 w-full rounded-none focus:border-none bg-gray-500 text-3xl"
           onChange={(e) => setName(e.target.value)}
+          defaultValue={userExistingData?.name}
         />
         <SectorComponent
           setSelectedValues={setSelectedValues}
           selectedValues={selectedValues}
+          id={id!}
         />
         <div>
           <label className="flex items-center gap-5 select-none text-xl  md:text-2xl cursor-pointer">

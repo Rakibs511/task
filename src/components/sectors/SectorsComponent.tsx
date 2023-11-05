@@ -11,6 +11,7 @@ import axios from "axios";
 interface PropsType {
   setSelectedValues: Dispatch<SetStateAction<string[]>>;
   selectedValues: string[];
+  id: number;
 }
 
 interface DataArray {
@@ -24,6 +25,7 @@ interface DataArray {
 export const SectorComponent = ({
   setSelectedValues,
   selectedValues,
+  id,
 }: PropsType) => {
   const [dataArray, setDataArray] = useState<DataArray[]>([]);
 
