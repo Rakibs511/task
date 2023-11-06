@@ -16,7 +16,7 @@ type UsersType = {
 export default function Home() {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [id, setId] = useState<number>();
-  const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>();
   const [isAgreeToTerms, setAgreeToTerms] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
 
