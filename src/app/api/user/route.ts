@@ -36,7 +36,7 @@ export const GET = async (req: Request) => {
   await dbConnection();
   const data = await prisma.user.findMany({
     orderBy: {
-      id: "desc",
+      createdAt: "desc",
     },
   });
   return NextResponse.json({ data }, { status: 200 });
