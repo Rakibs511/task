@@ -4,6 +4,7 @@ import { SectorComponent } from "../components/sectors/SectorsComponent";
 import Loading from "@/components/loading/Loading";
 import axios from "axios";
 import LoginPopUp from "@/components/loginPopUp/LoginPopUp";
+import Link from "next/link";
 
 type UsersType = {
   id: number;
@@ -29,11 +30,13 @@ export default function Home() {
 
   const getUserData = async () => {
     if (id) {
+      setLoading(true);
       const data = await axios({
         method: "GET",
         url: `/api/user/${id}`,
       });
       setUserExistingData(data.data.data);
+      setLoading(false);
     }
   };
 
@@ -88,12 +91,20 @@ export default function Home() {
             Agree to terms
           </label>
         </div>
-        <button
-          className="w-60 h-16 bg-gray-700 hover:bg-gray-800 text-3xl font-medium shadow-xl"
-          onClick={handleSave}
-        >
-          Save
-        </button>
+        <div className="flex justify-between">
+          <button
+            className="w-60 h-16 bg-gray-700 hover:bg-gray-800 text-3xl font-medium shadow-xl"
+            onClick={handleSave}
+          >
+            Save
+          </button>
+          <Link
+            href={"/view"}
+            className="px-10 py-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-3xl font-medium shadow-xl"
+          >
+            View
+          </Link>
+        </div>
       </div>
     </main>
   );
