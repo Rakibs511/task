@@ -23,9 +23,11 @@ export default function Home() {
   const [userExistingData, setUserExistingData] = useState<UsersType>();
 
   useEffect(() => {
-    setId(userExistingData?.id);
-    setSelectedValues(userExistingData?.selectedItem!);
-    setAgreeToTerms(Boolean(userExistingData?.agreeToTerms));
+    if (userExistingData) {
+      setId(userExistingData?.id);
+      setSelectedValues(userExistingData?.selectedItem!);
+      setAgreeToTerms(Boolean(userExistingData?.agreeToTerms));
+    }
   }, [userExistingData]);
 
   const getUserData = async () => {
