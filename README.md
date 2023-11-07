@@ -1,5 +1,7 @@
 # Task
 
+<img src="https://github.com/Rakibs511/task/blob/main/public/task.png"/>
+
 ## Features
 
 - Create a responsive single page application using React.js frontend framework.
