@@ -68,6 +68,7 @@ export const SectorComponent = ({
         onChange={handleSelectChange}
         autoFocus
         className="w-full md:w-[40rem] focus:border-red-500"
+        required
       >
         {dataArray.map((data) => {
           if (data.position === 1) {

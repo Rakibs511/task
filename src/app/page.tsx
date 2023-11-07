@@ -65,7 +65,7 @@ export default function Home() {
     <main className="bg-gray-600 flex gap-5 justify-center items-center text-white">
       {isLoading ? <Loading /> : null}
       {!id ? <LoginPopUp setId={setId} /> : null}
-      <div className="flex gap-5 flex-col">
+      <form className="flex gap-5 flex-col" onSubmit={handleSave}>
         <h1 className="text-xl md:text-3xl mb-6">
           Please enter your name and pick the Sectors <br /> you are currently
           involved in.
@@ -76,6 +76,7 @@ export default function Home() {
           className="p-4 w-full rounded-none focus:border-none bg-gray-500 text-3xl"
           onChange={(e) => setName(e.target.value)}
           defaultValue={userExistingData?.name}
+          required
         />
         <SectorComponent
           setSelectedValues={setSelectedValues}
@@ -89,6 +90,8 @@ export default function Home() {
               className="w-10 h-10 rounded cursor-pointer"
               checked={isAgreeToTerms}
               onChange={(e) => setAgreeToTerms(e.target.checked)}
+              required
+              aria-required
             />
             Agree to terms
           </label>
@@ -96,7 +99,7 @@ export default function Home() {
         <div className="flex justify-between">
           <button
             className="w-60 h-16 bg-gray-700 hover:bg-gray-800 text-3xl font-medium shadow-xl"
-            onClick={handleSave}
+            type="submit"
           >
             Save
           </button>
@@ -107,7 +110,7 @@ export default function Home() {
             View
           </Link>
         </div>
-      </div>
+      </form>
     </main>
   );
 }
