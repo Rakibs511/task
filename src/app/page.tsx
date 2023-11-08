@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { SectorComponent } from "../components/sectors/SectorsComponent";
 import Loading from "@/components/loading/Loading";
 import axios from "axios";
@@ -46,7 +46,8 @@ export default function Home() {
     getUserData();
   }, [id]);
 
-  const handleSave = async () => {
+  const handleSave = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setLoading(true);
     const data = await axios({
       method: "POST",

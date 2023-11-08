@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
 type PropTypes = {
   setId: Dispatch<SetStateAction<number | undefined>>;
@@ -7,7 +7,8 @@ type PropTypes = {
 const LoginPopUp = ({ setId }: PropTypes) => {
   const [newId, setNewId] = useState<number>();
 
-  const handleClick = () => {
+  const handleClick = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setId(newId);
   };
   return (
